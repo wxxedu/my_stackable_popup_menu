@@ -10,16 +10,7 @@ class MyPopupLayer extends StatelessWidget {
     return BlocBuilder<PopupBloc, PopupState>(
       builder: (context, state) {
         return Stack(
-          children: [
-            ...state.stack,
-            if (!state.isEmpty)
-              GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () {
-                  context.read<PopupBloc>().add(const PopupEvent.pop());
-                },
-              ),
-          ],
+          children: state.stack,
         );
       },
     );

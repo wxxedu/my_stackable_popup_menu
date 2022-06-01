@@ -32,12 +32,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  void pushNewWidget() {
-    myPush(
-      Text("Hi!"),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return MyPageWrapper(
@@ -47,10 +41,31 @@ class _MyHomePageState extends State<MyHomePage> {
           actions: [
             MyPopupIconButton(
               icon: const Icon(
-                Icons.search,
+                Icons.more,
                 color: Colors.white,
               ),
-              menuContent: const Text("Hello!"),
+              menuContent: MyPopupIconButton(
+                icon: const Icon(
+                  Icons.more,
+                  color: Colors.black,
+                ),
+                menuContent: MyPopupIconButton(
+                  icon: const Icon(
+                    Icons.more,
+                    color: Colors.black,
+                  ),
+                  menuContent: MyPopupIconButton(
+                    icon: const Icon(
+                      Icons.more,
+                      color: Colors.black,
+                    ),
+                    menuContent: const Text("Hello!"),
+                    isSelected: true,
+                  ),
+                  isSelected: true,
+                ),
+                isSelected: true,
+              ),
               isSelected: true,
             )
           ],
@@ -68,11 +83,6 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ],
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: pushNewWidget,
-          tooltip: 'Increment',
-          child: const Icon(Icons.add),
         ),
       ),
     );

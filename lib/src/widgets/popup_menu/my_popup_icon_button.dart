@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:my_stackable_popup_menu/my_stackable_popup_menu.dart';
-import 'package:my_stackable_popup_menu/src/widgets/popup_menu/my_popup_menu_painter.dart';
+import 'package:my_stackable_popup_menu/src/widgets/popup_menu/my_popup_menu.dart';
 import 'package:my_stackable_popup_menu/src/widgets/popup_menu/my_relative_position.dart';
 
 class MyPopupIconButton extends StatelessWidget {
@@ -12,17 +12,13 @@ class MyPopupIconButton extends StatelessWidget {
     this.onPressed,
     this.menuContent,
     required this.icon,
-    this.trianglePointerSize = const Size(20, 10),
-    this.cornerRadius = 10,
-    this.menuColor = const Color(0xFFFFFFFF),
-    this.elevation = 10,
     this.relativePosition = MyRelativePosition.bottomMiddle,
-    this.iconColor,
-    this.padding = const EdgeInsets.all(10),
+    this.color,
+    this.style = const MyPopupMenuStyle(),
   }) : super(key: key);
 
   /// The color of the icon
-  final Color? iconColor;
+  final Color? color;
 
   /// The content of the popup menu.
   final Widget? menuContent;
@@ -44,23 +40,11 @@ class MyPopupIconButton extends StatelessWidget {
   /// The key
   final GlobalKey globalKey = GlobalKey();
 
-  /// The size of the trianglular area.
-  final Size trianglePointerSize;
-
-  /// The corner radius of the popup menu.
-  final double cornerRadius;
-
-  /// The color of the popup menu.
-  final Color menuColor;
-
-  /// The elevation of the popup menu relative to the background.
-  final double elevation;
-
   /// The relative position of the popup button at where the popup menu shall start appearing.
   final MyRelativePosition relativePosition;
 
-  /// The padding
-  final EdgeInsetsGeometry padding;
+  /// Menu style
+  final MyPopupMenuStyle style;
 
   /// gets the position of the [PlatformIconButton]
   ///
@@ -73,44 +57,42 @@ class MyPopupIconButton extends StatelessWidget {
     return box.localToGlobal(Offset(dx, dy));
   }
 
+  /// Sends information to the [PopupBloc] to ask for the popup menu to be shown.
   void askBuildMenu(BuildContext context) {
-    myPushPositioned(
-      buildMenu(Size.zero, context),
-      (size) =>
-          getPosition(relativePosition) +
-          Offset(
-              -size.width / 2 +
-                  getHorizontalOffset(
-                      size: size,
-                      buttonPosition: getPosition(relativePosition),
-                      windowWidth: MediaQuery.of(context).size.width),
-              0),
-      (size) => buildMenu(size, context),
+    myRequestSize(
+      MyPopupMenu(
+        offstage: true,
+        position: Offset.zero,
+        style: style,
+        child: menuContent!,
+        sizeHandler: (size) => sizeHandler(size, context),
+      ),
     );
   }
 
-  Widget buildMenu(Size size, BuildContext context) {
-    return CustomPaint(
-      painter: MyPopupPainter(
-        trianglePointerSize: trianglePointerSize,
-        cornerRadius: cornerRadius,
-        color: menuColor,
-        elevation: elevation,
-        trianglePointerHorizontalOffset: -getHorizontalOffset(
-            size: size,
-            buttonPosition: getPosition(
-              relativePosition,
-            ),
-            windowWidth: MediaQuery.of(context).size.width),
-      ),
-      child: Padding(
-        padding: EdgeInsets.only(top: trianglePointerSize.height),
-        child: Padding(
-          padding: padding,
-          child: menuContent,
-        ),
-      ),
+  void sizeHandler(Size size, BuildContext context) {
+    final MyPopupMenu updatedMenu = MyPopupMenu(
+      style: style,
+      size: size,
+      position: getPosition(relativePosition) -
+          Offset(
+              size.width / 2 -
+                  getTrianglePointerHorizontalOffset(size, context),
+              0),
+      trianglePointerHorizontalOffset:
+          -getTrianglePointerHorizontalOffset(size, context),
+      child: menuContent!,
     );
+    myReplace(updatedMenu);
+  }
+
+  double getTrianglePointerHorizontalOffset(Size size, BuildContext context) {
+    return getHorizontalOffset(
+        size: size,
+        buttonPosition: getPosition(
+          relativePosition,
+        ),
+        windowWidth: MediaQuery.of(context).size.width);
   }
 
   /// Sometimes to avoid widgets being rendered outside the screen, we may need to apply a horizontal offset to the popup menu. This method can be used to get the horizontal offset using [size], [buttonPosition], and [windowWidth].
@@ -142,7 +124,7 @@ class MyPopupIconButton extends StatelessWidget {
     return PlatformIconButton(
       key: globalKey,
       icon: icon,
-      color: iconColor,
+      color: color,
       onPressed: () {
         if (menuContent == null) {
           onPressed?.call();

@@ -16,7 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$PopupState {
-  List<Widget> get stack => throw _privateConstructorUsedError;
+  List<MyPopupMenu> get stack => throw _privateConstructorUsedError;
+  bool get isDismissing => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $PopupStateCopyWith<PopupState> get copyWith =>
@@ -28,7 +29,7 @@ abstract class $PopupStateCopyWith<$Res> {
   factory $PopupStateCopyWith(
           PopupState value, $Res Function(PopupState) then) =
       _$PopupStateCopyWithImpl<$Res>;
-  $Res call({List<Widget> stack});
+  $Res call({List<MyPopupMenu> stack, bool isDismissing});
 }
 
 /// @nodoc
@@ -42,12 +43,17 @@ class _$PopupStateCopyWithImpl<$Res> implements $PopupStateCopyWith<$Res> {
   @override
   $Res call({
     Object? stack = freezed,
+    Object? isDismissing = freezed,
   }) {
     return _then(_value.copyWith(
       stack: stack == freezed
           ? _value.stack
           : stack // ignore: cast_nullable_to_non_nullable
-              as List<Widget>,
+              as List<MyPopupMenu>,
+      isDismissing: isDismissing == freezed
+          ? _value.isDismissing
+          : isDismissing // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -59,7 +65,7 @@ abstract class _$$_PopupStateCopyWith<$Res>
           _$_PopupState value, $Res Function(_$_PopupState) then) =
       __$$_PopupStateCopyWithImpl<$Res>;
   @override
-  $Res call({List<Widget> stack});
+  $Res call({List<MyPopupMenu> stack, bool isDismissing});
 }
 
 /// @nodoc
@@ -75,12 +81,17 @@ class __$$_PopupStateCopyWithImpl<$Res> extends _$PopupStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? stack = freezed,
+    Object? isDismissing = freezed,
   }) {
     return _then(_$_PopupState(
       stack: stack == freezed
           ? _value._stack
           : stack // ignore: cast_nullable_to_non_nullable
-              as List<Widget>,
+              as List<MyPopupMenu>,
+      isDismissing: isDismissing == freezed
+          ? _value.isDismissing
+          : isDismissing // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -88,18 +99,23 @@ class __$$_PopupStateCopyWithImpl<$Res> extends _$PopupStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_PopupState implements _PopupState {
-  const _$_PopupState({required final List<Widget> stack}) : _stack = stack;
+  const _$_PopupState(
+      {required final List<MyPopupMenu> stack, required this.isDismissing})
+      : _stack = stack;
 
-  final List<Widget> _stack;
+  final List<MyPopupMenu> _stack;
   @override
-  List<Widget> get stack {
+  List<MyPopupMenu> get stack {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_stack);
   }
 
   @override
+  final bool isDismissing;
+
+  @override
   String toString() {
-    return 'PopupState(stack: $stack)';
+    return 'PopupState(stack: $stack, isDismissing: $isDismissing)';
   }
 
   @override
@@ -107,12 +123,16 @@ class _$_PopupState implements _PopupState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_PopupState &&
-            const DeepCollectionEquality().equals(other._stack, _stack));
+            const DeepCollectionEquality().equals(other._stack, _stack) &&
+            const DeepCollectionEquality()
+                .equals(other.isDismissing, isDismissing));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_stack));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_stack),
+      const DeepCollectionEquality().hash(isDismissing));
 
   @JsonKey(ignore: true)
   @override
@@ -121,11 +141,14 @@ class _$_PopupState implements _PopupState {
 }
 
 abstract class _PopupState implements PopupState {
-  const factory _PopupState({required final List<Widget> stack}) =
-      _$_PopupState;
+  const factory _PopupState(
+      {required final List<MyPopupMenu> stack,
+      required final bool isDismissing}) = _$_PopupState;
 
   @override
-  List<Widget> get stack => throw _privateConstructorUsedError;
+  List<MyPopupMenu> get stack => throw _privateConstructorUsedError;
+  @override
+  bool get isDismissing => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_PopupStateCopyWith<_$_PopupState> get copyWith =>
@@ -136,38 +159,26 @@ abstract class _PopupState implements PopupState {
 mixin _$PopupEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Widget widget, ValueChanged<Size>? sizeHandler)
-        requestSize,
-    required TResult Function(Widget widget) push,
+    required TResult Function(MyPopupMenu widget) requestSize,
+    required TResult Function(MyPopupMenu widget) push,
     required TResult Function() pop,
-    required TResult Function(Widget widget) replace,
-    required TResult Function(Widget widget, Offset Function(Size) getPosition,
-            Widget Function(Size)? getChild)
-        pushPositioned,
+    required TResult Function(MyPopupMenu widget) replace,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Widget widget, ValueChanged<Size>? sizeHandler)?
-        requestSize,
-    TResult Function(Widget widget)? push,
+    TResult Function(MyPopupMenu widget)? requestSize,
+    TResult Function(MyPopupMenu widget)? push,
     TResult Function()? pop,
-    TResult Function(Widget widget)? replace,
-    TResult Function(Widget widget, Offset Function(Size) getPosition,
-            Widget Function(Size)? getChild)?
-        pushPositioned,
+    TResult Function(MyPopupMenu widget)? replace,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Widget widget, ValueChanged<Size>? sizeHandler)?
-        requestSize,
-    TResult Function(Widget widget)? push,
+    TResult Function(MyPopupMenu widget)? requestSize,
+    TResult Function(MyPopupMenu widget)? push,
     TResult Function()? pop,
-    TResult Function(Widget widget)? replace,
-    TResult Function(Widget widget, Offset Function(Size) getPosition,
-            Widget Function(Size)? getChild)?
-        pushPositioned,
+    TResult Function(MyPopupMenu widget)? replace,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -177,7 +188,6 @@ mixin _$PopupEvent {
     required TResult Function(PopupEventPush value) push,
     required TResult Function(PopupEventPop value) pop,
     required TResult Function(PopupEventReplace value) replace,
-    required TResult Function(PopupEventPushPositioned value) pushPositioned,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -186,7 +196,6 @@ mixin _$PopupEvent {
     TResult Function(PopupEventPush value)? push,
     TResult Function(PopupEventPop value)? pop,
     TResult Function(PopupEventReplace value)? replace,
-    TResult Function(PopupEventPushPositioned value)? pushPositioned,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -195,7 +204,6 @@ mixin _$PopupEvent {
     TResult Function(PopupEventPush value)? push,
     TResult Function(PopupEventPop value)? pop,
     TResult Function(PopupEventReplace value)? replace,
-    TResult Function(PopupEventPushPositioned value)? pushPositioned,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -222,7 +230,7 @@ abstract class _$$PopupEventRequestSizeCopyWith<$Res> {
   factory _$$PopupEventRequestSizeCopyWith(_$PopupEventRequestSize value,
           $Res Function(_$PopupEventRequestSize) then) =
       __$$PopupEventRequestSizeCopyWithImpl<$Res>;
-  $Res call({Widget widget, ValueChanged<Size>? sizeHandler});
+  $Res call({MyPopupMenu widget});
 }
 
 /// @nodoc
@@ -239,17 +247,12 @@ class __$$PopupEventRequestSizeCopyWithImpl<$Res>
   @override
   $Res call({
     Object? widget = freezed,
-    Object? sizeHandler = freezed,
   }) {
     return _then(_$PopupEventRequestSize(
       widget: widget == freezed
           ? _value.widget
           : widget // ignore: cast_nullable_to_non_nullable
-              as Widget,
-      sizeHandler: sizeHandler == freezed
-          ? _value.sizeHandler
-          : sizeHandler // ignore: cast_nullable_to_non_nullable
-              as ValueChanged<Size>?,
+              as MyPopupMenu,
     ));
   }
 }
@@ -257,16 +260,14 @@ class __$$PopupEventRequestSizeCopyWithImpl<$Res>
 /// @nodoc
 
 class _$PopupEventRequestSize implements PopupEventRequestSize {
-  const _$PopupEventRequestSize({required this.widget, this.sizeHandler});
+  const _$PopupEventRequestSize({required this.widget});
 
   @override
-  final Widget widget;
-  @override
-  final ValueChanged<Size>? sizeHandler;
+  final MyPopupMenu widget;
 
   @override
   String toString() {
-    return 'PopupEvent.requestSize(widget: $widget, sizeHandler: $sizeHandler)';
+    return 'PopupEvent.requestSize(widget: $widget)';
   }
 
   @override
@@ -274,14 +275,12 @@ class _$PopupEventRequestSize implements PopupEventRequestSize {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PopupEventRequestSize &&
-            const DeepCollectionEquality().equals(other.widget, widget) &&
-            (identical(other.sizeHandler, sizeHandler) ||
-                other.sizeHandler == sizeHandler));
+            const DeepCollectionEquality().equals(other.widget, widget));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(widget), sizeHandler);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(widget));
 
   @JsonKey(ignore: true)
   @override
@@ -292,48 +291,36 @@ class _$PopupEventRequestSize implements PopupEventRequestSize {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Widget widget, ValueChanged<Size>? sizeHandler)
-        requestSize,
-    required TResult Function(Widget widget) push,
+    required TResult Function(MyPopupMenu widget) requestSize,
+    required TResult Function(MyPopupMenu widget) push,
     required TResult Function() pop,
-    required TResult Function(Widget widget) replace,
-    required TResult Function(Widget widget, Offset Function(Size) getPosition,
-            Widget Function(Size)? getChild)
-        pushPositioned,
+    required TResult Function(MyPopupMenu widget) replace,
   }) {
-    return requestSize(widget, sizeHandler);
+    return requestSize(widget);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Widget widget, ValueChanged<Size>? sizeHandler)?
-        requestSize,
-    TResult Function(Widget widget)? push,
+    TResult Function(MyPopupMenu widget)? requestSize,
+    TResult Function(MyPopupMenu widget)? push,
     TResult Function()? pop,
-    TResult Function(Widget widget)? replace,
-    TResult Function(Widget widget, Offset Function(Size) getPosition,
-            Widget Function(Size)? getChild)?
-        pushPositioned,
+    TResult Function(MyPopupMenu widget)? replace,
   }) {
-    return requestSize?.call(widget, sizeHandler);
+    return requestSize?.call(widget);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Widget widget, ValueChanged<Size>? sizeHandler)?
-        requestSize,
-    TResult Function(Widget widget)? push,
+    TResult Function(MyPopupMenu widget)? requestSize,
+    TResult Function(MyPopupMenu widget)? push,
     TResult Function()? pop,
-    TResult Function(Widget widget)? replace,
-    TResult Function(Widget widget, Offset Function(Size) getPosition,
-            Widget Function(Size)? getChild)?
-        pushPositioned,
+    TResult Function(MyPopupMenu widget)? replace,
     required TResult orElse(),
   }) {
     if (requestSize != null) {
-      return requestSize(widget, sizeHandler);
+      return requestSize(widget);
     }
     return orElse();
   }
@@ -345,7 +332,6 @@ class _$PopupEventRequestSize implements PopupEventRequestSize {
     required TResult Function(PopupEventPush value) push,
     required TResult Function(PopupEventPop value) pop,
     required TResult Function(PopupEventReplace value) replace,
-    required TResult Function(PopupEventPushPositioned value) pushPositioned,
   }) {
     return requestSize(this);
   }
@@ -357,7 +343,6 @@ class _$PopupEventRequestSize implements PopupEventRequestSize {
     TResult Function(PopupEventPush value)? push,
     TResult Function(PopupEventPop value)? pop,
     TResult Function(PopupEventReplace value)? replace,
-    TResult Function(PopupEventPushPositioned value)? pushPositioned,
   }) {
     return requestSize?.call(this);
   }
@@ -369,7 +354,6 @@ class _$PopupEventRequestSize implements PopupEventRequestSize {
     TResult Function(PopupEventPush value)? push,
     TResult Function(PopupEventPop value)? pop,
     TResult Function(PopupEventReplace value)? replace,
-    TResult Function(PopupEventPushPositioned value)? pushPositioned,
     required TResult orElse(),
   }) {
     if (requestSize != null) {
@@ -380,12 +364,10 @@ class _$PopupEventRequestSize implements PopupEventRequestSize {
 }
 
 abstract class PopupEventRequestSize implements PopupEvent {
-  const factory PopupEventRequestSize(
-      {required final Widget widget,
-      final ValueChanged<Size>? sizeHandler}) = _$PopupEventRequestSize;
+  const factory PopupEventRequestSize({required final MyPopupMenu widget}) =
+      _$PopupEventRequestSize;
 
-  Widget get widget => throw _privateConstructorUsedError;
-  ValueChanged<Size>? get sizeHandler => throw _privateConstructorUsedError;
+  MyPopupMenu get widget => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$$PopupEventRequestSizeCopyWith<_$PopupEventRequestSize> get copyWith =>
       throw _privateConstructorUsedError;
@@ -396,7 +378,7 @@ abstract class _$$PopupEventPushCopyWith<$Res> {
   factory _$$PopupEventPushCopyWith(
           _$PopupEventPush value, $Res Function(_$PopupEventPush) then) =
       __$$PopupEventPushCopyWithImpl<$Res>;
-  $Res call({Widget widget});
+  $Res call({MyPopupMenu widget});
 }
 
 /// @nodoc
@@ -418,7 +400,7 @@ class __$$PopupEventPushCopyWithImpl<$Res>
       widget: widget == freezed
           ? _value.widget
           : widget // ignore: cast_nullable_to_non_nullable
-              as Widget,
+              as MyPopupMenu,
     ));
   }
 }
@@ -429,7 +411,7 @@ class _$PopupEventPush implements PopupEventPush {
   const _$PopupEventPush({required this.widget});
 
   @override
-  final Widget widget;
+  final MyPopupMenu widget;
 
   @override
   String toString() {
@@ -456,14 +438,10 @@ class _$PopupEventPush implements PopupEventPush {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Widget widget, ValueChanged<Size>? sizeHandler)
-        requestSize,
-    required TResult Function(Widget widget) push,
+    required TResult Function(MyPopupMenu widget) requestSize,
+    required TResult Function(MyPopupMenu widget) push,
     required TResult Function() pop,
-    required TResult Function(Widget widget) replace,
-    required TResult Function(Widget widget, Offset Function(Size) getPosition,
-            Widget Function(Size)? getChild)
-        pushPositioned,
+    required TResult Function(MyPopupMenu widget) replace,
   }) {
     return push(widget);
   }
@@ -471,14 +449,10 @@ class _$PopupEventPush implements PopupEventPush {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Widget widget, ValueChanged<Size>? sizeHandler)?
-        requestSize,
-    TResult Function(Widget widget)? push,
+    TResult Function(MyPopupMenu widget)? requestSize,
+    TResult Function(MyPopupMenu widget)? push,
     TResult Function()? pop,
-    TResult Function(Widget widget)? replace,
-    TResult Function(Widget widget, Offset Function(Size) getPosition,
-            Widget Function(Size)? getChild)?
-        pushPositioned,
+    TResult Function(MyPopupMenu widget)? replace,
   }) {
     return push?.call(widget);
   }
@@ -486,14 +460,10 @@ class _$PopupEventPush implements PopupEventPush {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Widget widget, ValueChanged<Size>? sizeHandler)?
-        requestSize,
-    TResult Function(Widget widget)? push,
+    TResult Function(MyPopupMenu widget)? requestSize,
+    TResult Function(MyPopupMenu widget)? push,
     TResult Function()? pop,
-    TResult Function(Widget widget)? replace,
-    TResult Function(Widget widget, Offset Function(Size) getPosition,
-            Widget Function(Size)? getChild)?
-        pushPositioned,
+    TResult Function(MyPopupMenu widget)? replace,
     required TResult orElse(),
   }) {
     if (push != null) {
@@ -509,7 +479,6 @@ class _$PopupEventPush implements PopupEventPush {
     required TResult Function(PopupEventPush value) push,
     required TResult Function(PopupEventPop value) pop,
     required TResult Function(PopupEventReplace value) replace,
-    required TResult Function(PopupEventPushPositioned value) pushPositioned,
   }) {
     return push(this);
   }
@@ -521,7 +490,6 @@ class _$PopupEventPush implements PopupEventPush {
     TResult Function(PopupEventPush value)? push,
     TResult Function(PopupEventPop value)? pop,
     TResult Function(PopupEventReplace value)? replace,
-    TResult Function(PopupEventPushPositioned value)? pushPositioned,
   }) {
     return push?.call(this);
   }
@@ -533,7 +501,6 @@ class _$PopupEventPush implements PopupEventPush {
     TResult Function(PopupEventPush value)? push,
     TResult Function(PopupEventPop value)? pop,
     TResult Function(PopupEventReplace value)? replace,
-    TResult Function(PopupEventPushPositioned value)? pushPositioned,
     required TResult orElse(),
   }) {
     if (push != null) {
@@ -544,10 +511,10 @@ class _$PopupEventPush implements PopupEventPush {
 }
 
 abstract class PopupEventPush implements PopupEvent {
-  const factory PopupEventPush({required final Widget widget}) =
+  const factory PopupEventPush({required final MyPopupMenu widget}) =
       _$PopupEventPush;
 
-  Widget get widget => throw _privateConstructorUsedError;
+  MyPopupMenu get widget => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$$PopupEventPushCopyWith<_$PopupEventPush> get copyWith =>
       throw _privateConstructorUsedError;
@@ -593,14 +560,10 @@ class _$PopupEventPop implements PopupEventPop {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Widget widget, ValueChanged<Size>? sizeHandler)
-        requestSize,
-    required TResult Function(Widget widget) push,
+    required TResult Function(MyPopupMenu widget) requestSize,
+    required TResult Function(MyPopupMenu widget) push,
     required TResult Function() pop,
-    required TResult Function(Widget widget) replace,
-    required TResult Function(Widget widget, Offset Function(Size) getPosition,
-            Widget Function(Size)? getChild)
-        pushPositioned,
+    required TResult Function(MyPopupMenu widget) replace,
   }) {
     return pop();
   }
@@ -608,14 +571,10 @@ class _$PopupEventPop implements PopupEventPop {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Widget widget, ValueChanged<Size>? sizeHandler)?
-        requestSize,
-    TResult Function(Widget widget)? push,
+    TResult Function(MyPopupMenu widget)? requestSize,
+    TResult Function(MyPopupMenu widget)? push,
     TResult Function()? pop,
-    TResult Function(Widget widget)? replace,
-    TResult Function(Widget widget, Offset Function(Size) getPosition,
-            Widget Function(Size)? getChild)?
-        pushPositioned,
+    TResult Function(MyPopupMenu widget)? replace,
   }) {
     return pop?.call();
   }
@@ -623,14 +582,10 @@ class _$PopupEventPop implements PopupEventPop {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Widget widget, ValueChanged<Size>? sizeHandler)?
-        requestSize,
-    TResult Function(Widget widget)? push,
+    TResult Function(MyPopupMenu widget)? requestSize,
+    TResult Function(MyPopupMenu widget)? push,
     TResult Function()? pop,
-    TResult Function(Widget widget)? replace,
-    TResult Function(Widget widget, Offset Function(Size) getPosition,
-            Widget Function(Size)? getChild)?
-        pushPositioned,
+    TResult Function(MyPopupMenu widget)? replace,
     required TResult orElse(),
   }) {
     if (pop != null) {
@@ -646,7 +601,6 @@ class _$PopupEventPop implements PopupEventPop {
     required TResult Function(PopupEventPush value) push,
     required TResult Function(PopupEventPop value) pop,
     required TResult Function(PopupEventReplace value) replace,
-    required TResult Function(PopupEventPushPositioned value) pushPositioned,
   }) {
     return pop(this);
   }
@@ -658,7 +612,6 @@ class _$PopupEventPop implements PopupEventPop {
     TResult Function(PopupEventPush value)? push,
     TResult Function(PopupEventPop value)? pop,
     TResult Function(PopupEventReplace value)? replace,
-    TResult Function(PopupEventPushPositioned value)? pushPositioned,
   }) {
     return pop?.call(this);
   }
@@ -670,7 +623,6 @@ class _$PopupEventPop implements PopupEventPop {
     TResult Function(PopupEventPush value)? push,
     TResult Function(PopupEventPop value)? pop,
     TResult Function(PopupEventReplace value)? replace,
-    TResult Function(PopupEventPushPositioned value)? pushPositioned,
     required TResult orElse(),
   }) {
     if (pop != null) {
@@ -689,7 +641,7 @@ abstract class _$$PopupEventReplaceCopyWith<$Res> {
   factory _$$PopupEventReplaceCopyWith(
           _$PopupEventReplace value, $Res Function(_$PopupEventReplace) then) =
       __$$PopupEventReplaceCopyWithImpl<$Res>;
-  $Res call({Widget widget});
+  $Res call({MyPopupMenu widget});
 }
 
 /// @nodoc
@@ -711,7 +663,7 @@ class __$$PopupEventReplaceCopyWithImpl<$Res>
       widget: widget == freezed
           ? _value.widget
           : widget // ignore: cast_nullable_to_non_nullable
-              as Widget,
+              as MyPopupMenu,
     ));
   }
 }
@@ -722,7 +674,7 @@ class _$PopupEventReplace implements PopupEventReplace {
   const _$PopupEventReplace({required this.widget});
 
   @override
-  final Widget widget;
+  final MyPopupMenu widget;
 
   @override
   String toString() {
@@ -749,14 +701,10 @@ class _$PopupEventReplace implements PopupEventReplace {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Widget widget, ValueChanged<Size>? sizeHandler)
-        requestSize,
-    required TResult Function(Widget widget) push,
+    required TResult Function(MyPopupMenu widget) requestSize,
+    required TResult Function(MyPopupMenu widget) push,
     required TResult Function() pop,
-    required TResult Function(Widget widget) replace,
-    required TResult Function(Widget widget, Offset Function(Size) getPosition,
-            Widget Function(Size)? getChild)
-        pushPositioned,
+    required TResult Function(MyPopupMenu widget) replace,
   }) {
     return replace(widget);
   }
@@ -764,14 +712,10 @@ class _$PopupEventReplace implements PopupEventReplace {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Widget widget, ValueChanged<Size>? sizeHandler)?
-        requestSize,
-    TResult Function(Widget widget)? push,
+    TResult Function(MyPopupMenu widget)? requestSize,
+    TResult Function(MyPopupMenu widget)? push,
     TResult Function()? pop,
-    TResult Function(Widget widget)? replace,
-    TResult Function(Widget widget, Offset Function(Size) getPosition,
-            Widget Function(Size)? getChild)?
-        pushPositioned,
+    TResult Function(MyPopupMenu widget)? replace,
   }) {
     return replace?.call(widget);
   }
@@ -779,14 +723,10 @@ class _$PopupEventReplace implements PopupEventReplace {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Widget widget, ValueChanged<Size>? sizeHandler)?
-        requestSize,
-    TResult Function(Widget widget)? push,
+    TResult Function(MyPopupMenu widget)? requestSize,
+    TResult Function(MyPopupMenu widget)? push,
     TResult Function()? pop,
-    TResult Function(Widget widget)? replace,
-    TResult Function(Widget widget, Offset Function(Size) getPosition,
-            Widget Function(Size)? getChild)?
-        pushPositioned,
+    TResult Function(MyPopupMenu widget)? replace,
     required TResult orElse(),
   }) {
     if (replace != null) {
@@ -802,7 +742,6 @@ class _$PopupEventReplace implements PopupEventReplace {
     required TResult Function(PopupEventPush value) push,
     required TResult Function(PopupEventPop value) pop,
     required TResult Function(PopupEventReplace value) replace,
-    required TResult Function(PopupEventPushPositioned value) pushPositioned,
   }) {
     return replace(this);
   }
@@ -814,7 +753,6 @@ class _$PopupEventReplace implements PopupEventReplace {
     TResult Function(PopupEventPush value)? push,
     TResult Function(PopupEventPop value)? pop,
     TResult Function(PopupEventReplace value)? replace,
-    TResult Function(PopupEventPushPositioned value)? pushPositioned,
   }) {
     return replace?.call(this);
   }
@@ -826,7 +764,6 @@ class _$PopupEventReplace implements PopupEventReplace {
     TResult Function(PopupEventPush value)? push,
     TResult Function(PopupEventPop value)? pop,
     TResult Function(PopupEventReplace value)? replace,
-    TResult Function(PopupEventPushPositioned value)? pushPositioned,
     required TResult orElse(),
   }) {
     if (replace != null) {
@@ -837,202 +774,11 @@ class _$PopupEventReplace implements PopupEventReplace {
 }
 
 abstract class PopupEventReplace implements PopupEvent {
-  const factory PopupEventReplace({required final Widget widget}) =
+  const factory PopupEventReplace({required final MyPopupMenu widget}) =
       _$PopupEventReplace;
 
-  Widget get widget => throw _privateConstructorUsedError;
+  MyPopupMenu get widget => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$$PopupEventReplaceCopyWith<_$PopupEventReplace> get copyWith =>
       throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$PopupEventPushPositionedCopyWith<$Res> {
-  factory _$$PopupEventPushPositionedCopyWith(_$PopupEventPushPositioned value,
-          $Res Function(_$PopupEventPushPositioned) then) =
-      __$$PopupEventPushPositionedCopyWithImpl<$Res>;
-  $Res call(
-      {Widget widget,
-      Offset Function(Size) getPosition,
-      Widget Function(Size)? getChild});
-}
-
-/// @nodoc
-class __$$PopupEventPushPositionedCopyWithImpl<$Res>
-    extends _$PopupEventCopyWithImpl<$Res>
-    implements _$$PopupEventPushPositionedCopyWith<$Res> {
-  __$$PopupEventPushPositionedCopyWithImpl(_$PopupEventPushPositioned _value,
-      $Res Function(_$PopupEventPushPositioned) _then)
-      : super(_value, (v) => _then(v as _$PopupEventPushPositioned));
-
-  @override
-  _$PopupEventPushPositioned get _value =>
-      super._value as _$PopupEventPushPositioned;
-
-  @override
-  $Res call({
-    Object? widget = freezed,
-    Object? getPosition = freezed,
-    Object? getChild = freezed,
-  }) {
-    return _then(_$PopupEventPushPositioned(
-      widget: widget == freezed
-          ? _value.widget
-          : widget // ignore: cast_nullable_to_non_nullable
-              as Widget,
-      getPosition: getPosition == freezed
-          ? _value.getPosition
-          : getPosition // ignore: cast_nullable_to_non_nullable
-              as Offset Function(Size),
-      getChild: getChild == freezed
-          ? _value.getChild
-          : getChild // ignore: cast_nullable_to_non_nullable
-              as Widget Function(Size)?,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$PopupEventPushPositioned implements PopupEventPushPositioned {
-  const _$PopupEventPushPositioned(
-      {required this.widget, required this.getPosition, this.getChild});
-
-  @override
-  final Widget widget;
-  @override
-  final Offset Function(Size) getPosition;
-  @override
-  final Widget Function(Size)? getChild;
-
-  @override
-  String toString() {
-    return 'PopupEvent.pushPositioned(widget: $widget, getPosition: $getPosition, getChild: $getChild)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$PopupEventPushPositioned &&
-            const DeepCollectionEquality().equals(other.widget, widget) &&
-            (identical(other.getPosition, getPosition) ||
-                other.getPosition == getPosition) &&
-            (identical(other.getChild, getChild) ||
-                other.getChild == getChild));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(widget), getPosition, getChild);
-
-  @JsonKey(ignore: true)
-  @override
-  _$$PopupEventPushPositionedCopyWith<_$PopupEventPushPositioned>
-      get copyWith =>
-          __$$PopupEventPushPositionedCopyWithImpl<_$PopupEventPushPositioned>(
-              this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(Widget widget, ValueChanged<Size>? sizeHandler)
-        requestSize,
-    required TResult Function(Widget widget) push,
-    required TResult Function() pop,
-    required TResult Function(Widget widget) replace,
-    required TResult Function(Widget widget, Offset Function(Size) getPosition,
-            Widget Function(Size)? getChild)
-        pushPositioned,
-  }) {
-    return pushPositioned(widget, getPosition, getChild);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Widget widget, ValueChanged<Size>? sizeHandler)?
-        requestSize,
-    TResult Function(Widget widget)? push,
-    TResult Function()? pop,
-    TResult Function(Widget widget)? replace,
-    TResult Function(Widget widget, Offset Function(Size) getPosition,
-            Widget Function(Size)? getChild)?
-        pushPositioned,
-  }) {
-    return pushPositioned?.call(widget, getPosition, getChild);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Widget widget, ValueChanged<Size>? sizeHandler)?
-        requestSize,
-    TResult Function(Widget widget)? push,
-    TResult Function()? pop,
-    TResult Function(Widget widget)? replace,
-    TResult Function(Widget widget, Offset Function(Size) getPosition,
-            Widget Function(Size)? getChild)?
-        pushPositioned,
-    required TResult orElse(),
-  }) {
-    if (pushPositioned != null) {
-      return pushPositioned(widget, getPosition, getChild);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(PopupEventRequestSize value) requestSize,
-    required TResult Function(PopupEventPush value) push,
-    required TResult Function(PopupEventPop value) pop,
-    required TResult Function(PopupEventReplace value) replace,
-    required TResult Function(PopupEventPushPositioned value) pushPositioned,
-  }) {
-    return pushPositioned(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(PopupEventRequestSize value)? requestSize,
-    TResult Function(PopupEventPush value)? push,
-    TResult Function(PopupEventPop value)? pop,
-    TResult Function(PopupEventReplace value)? replace,
-    TResult Function(PopupEventPushPositioned value)? pushPositioned,
-  }) {
-    return pushPositioned?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(PopupEventRequestSize value)? requestSize,
-    TResult Function(PopupEventPush value)? push,
-    TResult Function(PopupEventPop value)? pop,
-    TResult Function(PopupEventReplace value)? replace,
-    TResult Function(PopupEventPushPositioned value)? pushPositioned,
-    required TResult orElse(),
-  }) {
-    if (pushPositioned != null) {
-      return pushPositioned(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class PopupEventPushPositioned implements PopupEvent {
-  const factory PopupEventPushPositioned(
-      {required final Widget widget,
-      required final Offset Function(Size) getPosition,
-      final Widget Function(Size)? getChild}) = _$PopupEventPushPositioned;
-
-  Widget get widget => throw _privateConstructorUsedError;
-  Offset Function(Size) get getPosition => throw _privateConstructorUsedError;
-  Widget Function(Size)? get getChild => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  _$$PopupEventPushPositionedCopyWith<_$PopupEventPushPositioned>
-      get copyWith => throw _privateConstructorUsedError;
 }

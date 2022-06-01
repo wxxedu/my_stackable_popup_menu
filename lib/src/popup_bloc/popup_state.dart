@@ -3,7 +3,8 @@ part of "popup_bloc.dart";
 @freezed
 class PopupState with _$PopupState {
   const factory PopupState({
-    required List<Widget> stack,
+    required List<MyPopupMenu> stack,
+    required bool isDismissing,
   }) = _PopupState;
 }
 
@@ -12,6 +13,7 @@ extension PopupStateX on PopupState {
   static PopupState initial() {
     return const PopupState(
       stack: [],
+      isDismissing: false,
     );
   }
 
@@ -27,7 +29,10 @@ extension PopupStateX on PopupState {
   }
 
   /// Pushes the given [widget] on the stack.
-  PopupState push(Widget widget) {
+  PopupState push(MyPopupMenu widget) {
     return copyWith(stack: stack.toList()..add(widget));
   }
+
+  /// Returns the top [Widget] from the stack, if stack is not empty, else returns nil.
+  MyPopupMenu? get top => stack.isEmpty ? null : stack.last;
 }

@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:freezed_annotation/freezed_annotation.dart";
 import 'package:injectable/injectable.dart';
-import 'package:measure_size/measure_size.dart';
+import 'package:my_stackable_popup_menu/src/widgets/popup_menu/my_popup_menu.dart';
 
 part "popup_state.dart";
 
@@ -19,53 +19,13 @@ class PopupBloc extends Bloc<PopupEvent, PopupState> {
         push: (event) => onPush(event, emit),
         pop: (event) => onPop(event, emit),
         replace: (event) => onReplace(event, emit),
-        pushPositioned: (event) => onPushPositioned(event, emit),
       );
     });
   }
 
-  void onPushPositioned(
-    PopupEventPushPositioned event,
-    Emitter emit,
-  ) {
-    // request the size of the widget
-    add(
-      PopupEvent.requestSize(
-        widget: event.widget,
-        // once the size is known, we can push the widget to the position which
-        // is determined by the size
-        sizeHandler: (size) {
-          // get the size to the left and top of the widget
-          final Offset offset = event.getPosition(size);
-          // create the positioned widget
-          final Widget widget = Positioned(
-            left: offset.dx,
-            top: offset.dy,
-            child: event.getChild?.call(size) ?? event.widget,
-          );
-          // ask to replace the widget
-          add(
-            PopupEvent.replace(
-              widget: widget,
-            ),
-          );
-        },
-      ),
-    );
-  }
-
   void onRequestSize(PopupEventRequestSize event, Emitter emit) {
-    final Widget sizeObserver = Offstage(
-      offstage: true,
-      child: MeasureSize(
-        onChange: (size) {
-          event.sizeHandler?.call(size);
-        },
-        child: event.widget,
-      ),
-    );
     add(
-      PopupEvent.push(widget: sizeObserver),
+      PopupEvent.push(widget: event.widget),
     );
   }
 
