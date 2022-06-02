@@ -5,17 +5,18 @@ import 'package:my_stackable_popup_menu/src/widgets/popup_menu/my_popup_menu.dar
 import 'package:my_stackable_popup_menu/src/widgets/popup_menu/my_relative_position.dart';
 
 class MyPopupIconButton extends StatelessWidget {
-  MyPopupIconButton({
-    Key? key,
-    this.isSelected = false,
-    this.onlyShowMenuWhenSelected = true,
-    this.onPressed,
-    this.menuContent,
-    required this.icon,
-    this.relativePosition = MyRelativePosition.bottomMiddle,
-    this.color,
-    this.style = const MyPopupMenuStyle(),
-  }) : super(key: key);
+  MyPopupIconButton(
+      {Key? key,
+      this.isSelected = false,
+      this.onlyShowMenuWhenSelected = true,
+      this.onPressed,
+      this.menuContent,
+      required this.icon,
+      this.relativePosition = MyRelativePosition.bottomMiddle,
+      this.color,
+      this.style = const MyPopupMenuStyle(),
+      this.padding = const EdgeInsets.all(0)})
+      : super(key: key);
 
   /// The color of the icon
   final Color? color;
@@ -45,6 +46,9 @@ class MyPopupIconButton extends StatelessWidget {
 
   /// Menu style
   final MyPopupMenuStyle style;
+
+  /// Icon Button Style
+  final EdgeInsets padding;
 
   /// gets the position of the [PlatformIconButton]
   ///
@@ -125,6 +129,7 @@ class MyPopupIconButton extends StatelessWidget {
       key: globalKey,
       icon: icon,
       color: color,
+      padding: padding,
       onPressed: () {
         if (menuContent == null) {
           onPressed?.call();
